@@ -1,0 +1,269 @@
+---
+import type { Question } from '../data/types';
+
+interface Props {
+  questions: Question[];
+  tenseName: string;
+}
+
+const { questions, tenseName } = Astro.props;
+---
+
+<div id="quiz-container" class="max-w-2xl mx-auto" data-questions={JSON.stringify(questions)}>
+  <!-- Start Screen -->
+  <div id="start-screen" class="text-center py-12">
+    <div class="w-24 h-24 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-8 text-blue-600 dark:text-blue-400">
+      <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    </div>
+    <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white mb-4">Ready to test your knowledge?</h2>
+    <p class="text-lg text-zinc-600 dark:text-zinc-400 mb-10 max-w-md mx-auto">You will get 5 random questions about <span class="font-bold text-blue-600 dark:text-blue-400">{tenseName}</span>.</p>
+    <button id="start-btn" class="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 w-full sm:w-auto">
+      Start Quiz
+    </button>
+  </div>
+
+  <!-- Question Screen -->
+  <div id="question-screen" class="hidden">
+    <div class="flex justify-between items-center mb-8">
+      <span id="question-counter" class="text-sm font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">Question 1/5</span>
+      <div class="h-2 w-32 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-blue-500 w-0 transition-all duration-300 ease-out"></div>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 mb-8 shadow-xl shadow-zinc-200/50 dark:shadow-black/20">
+      <h3 id="question-text" class="text-xl md:text-2xl font-bold text-zinc-900 dark:text-white mb-3"></h3>
+      <p id="question-hint" class="text-zinc-500 dark:text-zinc-400 italic mb-8 flex items-center gap-2">
+        <span class="w-1 h-1 rounded-full bg-blue-500"></span>
+        <span id="hint-text"></span>
+      </p>
+
+      <div id="choices-container" class="space-y-3">
+        <!-- Buttons injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Screen -->
+  <div id="result-screen" class="hidden">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-50 dark:bg-zinc-800 mb-6 relative">
+        <svg class="w-full h-full absolute text-blue-100 dark:text-zinc-700" viewBox="0 0 36 36">
+           <path class="text-zinc-200 dark:text-zinc-800" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="2"/>
+           <path id="score-circle" class="text-blue-500 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+        <span id="score-percentage" class="text-2xl font-black text-blue-600 dark:text-blue-400"></span>
+      </div>
+      <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white mb-2">Quiz Complete!</h2>
+      <p id="score-text" class="text-zinc-600 dark:text-zinc-400 text-lg">You scored X/5</p>
+    </div>
+
+    <div id="review-container" class="space-y-6 mb-10">
+      <!-- Review items injected here -->
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button id="retry-btn" class="px-8 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+        Try Again
+      </button>
+      <a href="/tenses" class="px-8 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl font-bold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">
+        Back to Tenses
+      </a>
+    </div>
+  </div>
+</div>
+
+<script is:inline type="module">
+  import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+  // WRAP IN IIFE to avoid global scope pollution (though module helps, IIFE is safer for re-runs)
+  (() => {
+    // State
+    let allQuestions = [];
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let userAnswers = [];
+
+    // DOM Elements - scoped to this execution context
+    let container;
+    let startScreen, questionScreen, resultScreen;
+    let startBtn, retryBtn;
+    let questionText, hintText, choicesContainer, questionCounter, progressBar;
+    let scorePercentage, scoreText, scoreCircle, reviewContainer;
+
+    function init() {
+      container = document.getElementById('quiz-container');
+      if (!container) return;
+
+      startScreen = document.getElementById('start-screen');
+      questionScreen = document.getElementById('question-screen');
+      resultScreen = document.getElementById('result-screen');
+      startBtn = document.getElementById('start-btn');
+      retryBtn = document.getElementById('retry-btn');
+      questionText = document.getElementById('question-text');
+      hintText = document.getElementById('hint-text');
+      choicesContainer = document.getElementById('choices-container');
+      questionCounter = document.getElementById('question-counter');
+      progressBar = document.getElementById('progress-bar');
+      scorePercentage = document.getElementById('score-percentage');
+      scoreText = document.getElementById('score-text');
+      scoreCircle = document.getElementById('score-circle');
+      reviewContainer = document.getElementById('review-container');
+
+      try {
+        allQuestions = JSON.parse(container.dataset.questions || '[]');
+      } catch (e) {
+        console.error("Failed to parse questions", e);
+        return;
+      }
+
+      // Reset everything based on FRESH state
+      currentQuestions = [];
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+      showScreen('start');
+
+      // Attach Listeners
+      if (startBtn) startBtn.onclick = startQuiz;
+      if (retryBtn) retryBtn.onclick = startQuiz;
+    }
+
+    function startQuiz() {
+      currentQuestions = [...allQuestions]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 5);
+      
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+
+      showScreen('question');
+      renderQuestion();
+    }
+
+    function showScreen(screenName) {
+      if(startScreen) startScreen.classList.add('hidden');
+      if(questionScreen) questionScreen.classList.add('hidden');
+      if(resultScreen) resultScreen.classList.add('hidden');
+
+      if (screenName === 'start' && startScreen) startScreen.classList.remove('hidden');
+      if (screenName === 'question' && questionScreen) questionScreen.classList.remove('hidden');
+      if (screenName === 'result' && resultScreen) resultScreen.classList.remove('hidden');
+    }
+
+    function renderQuestion() {
+      const q = currentQuestions[currentQuestionIndex];
+      if (!q || !questionText || !choicesContainer) return;
+
+      questionText.textContent = q.promptEN;
+      if(hintText) hintText.textContent = q.promptIDHint || '';
+      if(questionCounter) questionCounter.textContent = `Question ${currentQuestionIndex + 1}/5`;
+      if(progressBar) progressBar.style.width = `${((currentQuestionIndex) / 5) * 100}%`;
+
+      choicesContainer.innerHTML = '';
+
+      q.choices.forEach((choice, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'w-full text-left p-5 rounded-xl border-2 border-zinc-100 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 bg-white dark:bg-zinc-950/50 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-all font-semibold text-zinc-700 dark:text-zinc-300';
+        btn.textContent = choice;
+        btn.onclick = () => handleAnswer(idx);
+        choicesContainer.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(selectedIndex) {
+      const q = currentQuestions[currentQuestionIndex];
+      const isCorrect = selectedIndex === q.answerIndex;
+      
+      if (isCorrect) score++;
+      
+      userAnswers.push({
+        questionId: q.id,
+        selectedIndex,
+        isCorrect
+      });
+
+      if (currentQuestionIndex < 4) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      showScreen('result');
+      
+      const percentage = Math.round((score / 5) * 100);
+
+      if (scoreText) scoreText.textContent = `You scored ${score}/5`;
+      if (scorePercentage) scorePercentage.textContent = `${percentage}%`;
+      if (scoreCircle) {
+         scoreCircle.style.strokeDasharray = '0, 100';
+         setTimeout(() => {
+            if (scoreCircle) scoreCircle.style.strokeDasharray = `${percentage}, 100`;
+         }, 100);
+      }
+      
+      if (score === 5) {
+        triggerConfetti();
+      }
+
+      if (reviewContainer) {
+        reviewContainer.innerHTML = '';
+        userAnswers.forEach((ans, idx) => {
+          const q = currentQuestions[idx];
+          const item = document.createElement('div');
+          item.className = `p-6 rounded-2xl border ${ans.isCorrect ? 'border-green-200 bg-green-50 dark:border-green-900/30 dark:bg-green-900/10' : 'border-red-200 bg-red-50 dark:border-red-900/30 dark:bg-red-900/10'}`;
+          
+          item.innerHTML = `
+            <div class="flex gap-3 items-start mb-3">
+              <div class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${ans.isCorrect ? 'bg-green-200 text-green-700 dark:bg-green-800 dark:text-green-300' : 'bg-red-200 text-red-700 dark:bg-red-800 dark:text-red-300'}">
+                ${ans.isCorrect ? '✓' : '✕'}
+              </div>
+              <div>
+                <p class="font-bold text-zinc-900 dark:text-white text-lg">${q.promptEN}</p>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">${q.promptIDHint}</p>
+              </div>
+            </div>
+            
+            <div class="ml-9 space-y-2 text-sm md:text-base">
+              ${!ans.isCorrect ? `<div class="p-3 bg-red-100/50 dark:bg-red-900/20 rounded-lg text-red-800 dark:text-red-300"><span class="font-bold">You:</span> ${q.choices[ans.selectedIndex]}</div>` : ''}
+              <div class="p-3 bg-green-100/50 dark:bg-green-900/20 rounded-lg text-green-800 dark:text-green-300"><span class="font-bold">Correct:</span> ${q.choices[q.answerIndex]}</div>
+              
+              <div class="mt-4 pt-4 border-t border-black/5 dark:border-white/5 text-zinc-600 dark:text-zinc-400">
+                 <span class="font-bold block uppercase text-xs tracking-wider mb-1 opacity-70">Explanation</span>
+                 ${q.explanationEN}
+                 <div class="text-xs italic opacity-75 mt-1">${q.explanationIDHint}</div>
+              </div>
+            </div>
+          `;
+          reviewContainer.appendChild(item);
+        });
+      }
+    }
+
+    function triggerConfetti() {
+      const duration = 3000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        if (confetti) {
+          confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+          confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+        }
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+
+    // Initialize immediately
+    init();
+    
+    // Standard DOMContentLoaded for robustness (if script runs before DOM)
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>

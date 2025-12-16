@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Master English Tenses">
+	<div class="flex flex-col items-center justify-center py-24 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-blue-900/30 text-zinc-600 dark:text-blue-300 text-xs font-bold uppercase tracking-wide mb-8">
+      <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+      Interactive Learning
+    </div>
+		<h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-8 max-w-4xl bg-clip-text text-transparent bg-gradient-to-r from-zinc-800 to-zinc-500 dark:from-white dark:to-zinc-400">
+			Master English Tenses in <span class="text-indigo-500 dark:text-blue-500">Small Steps</span>
+		</h1>
+		<p class="text-xl md:text-2xl text-zinc-500 dark:text-zinc-400 mb-12 max-w-2xl leading-relaxed">
+			Learn the patterns, understand the usage, and practice with purpose. 
+			From basic daily routines to complex storytelling.
+		</p>
+		
+		<div class="flex flex-wrap justify-center gap-4 mb-24">
+			<a href="/tenses" class="px-8 py-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-xl shadow-zinc-200 dark:shadow-blue-500/20 hover:scale-105 active:scale-95">
+				Start Learning Now
+			</a>
+      <a href="#how-it-works" class="px-8 py-4 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700 font-bold rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-all">
+        How it works
+      </a>
+		</div>
+
+		<div id="how-it-works" class="grid md:grid-cols-3 gap-8 w-full text-left">
+			<div class="spotlight-card relative overflow-hidden group p-8 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm rounded-3xl border border-zinc-100 dark:border-zinc-800/50 hover:border-indigo-200 dark:hover:border-blue-500/30 transition-all hover:shadow-lg hover:shadow-indigo-500/5">
+        <!-- Spotlight Overlay -->
+        <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+             style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(99, 102, 241, 0.06), transparent 40%);"></div>
+             
+				<div class="relative w-12 h-12 bg-blue-50 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mb-6 text-blue-600 dark:text-blue-300 font-bold text-xl shadow-sm group-hover:scale-110 transition-transform duration-300 ease-out">1</div>
+				<h3 class="font-bold text-xl mb-3 text-zinc-900 dark:text-white relative">Learn</h3>
+				<p class="text-zinc-500 dark:text-zinc-400 leading-relaxed relative">Understand the formula and when to use each tense with clear examples and hints.</p>
+			</div>
+
+			<div class="spotlight-card relative overflow-hidden group p-8 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm rounded-3xl border border-zinc-100 dark:border-zinc-800/50 hover:border-indigo-200 dark:hover:border-purple-500/30 transition-all hover:shadow-lg hover:shadow-violet-500/5">
+        <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+             style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(139, 92, 246, 0.06), transparent 40%);"></div>
+
+				<div class="relative w-12 h-12 bg-violet-50 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mb-6 text-violet-600 dark:text-violet-300 font-bold text-xl shadow-sm group-hover:scale-110 transition-transform duration-300 ease-out">2</div>
+				<h3 class="font-bold text-xl mb-3 text-zinc-900 dark:text-white relative">Practice</h3>
+				<p class="text-zinc-500 dark:text-zinc-400 leading-relaxed relative">Review positive, negative, and question forms with immediate translation context.</p>
+			</div>
+
+			<div class="spotlight-card relative overflow-hidden group p-8 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm rounded-3xl border border-zinc-100 dark:border-zinc-800/50 hover:border-indigo-200 dark:hover:border-green-500/30 transition-all hover:shadow-lg hover:shadow-emerald-500/5">
+        <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+             style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(16, 185, 129, 0.06), transparent 40%);"></div>
+
+				<div class="relative w-12 h-12 bg-emerald-50 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-300 font-bold text-xl shadow-sm group-hover:scale-110 transition-transform duration-300 ease-out">3</div>
+				<h3 class="font-bold text-xl mb-3 text-zinc-900 dark:text-white relative">Test</h3>
+				<p class="text-zinc-500 dark:text-zinc-400 leading-relaxed relative">Challenge yourself with dynamic quizzes and get instant feedback on your mistakes.</p>
+			</div>
+		</div>
+	</div>
+</Layout>

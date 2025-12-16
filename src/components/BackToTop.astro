@@ -1,0 +1,45 @@
+---
+---
+<button
+  id="back-to-top"
+  aria-label="Back to Top"
+  class="fixed bottom-8 right-8 z-50 p-3 rounded-full shadow-lg bg-zinc-900/90 dark:bg-blue-600/90 text-white backdrop-blur-sm transition-all duration-300 opacity-0 translate-y-10 invisible hover:scale-110 hover:bg-zinc-800 dark:hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+>
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+  </svg>
+</button>
+
+<script is:inline>
+  (() => {
+    function initBackToTop() {
+      const backToTopBtn = document.getElementById('back-to-top');
+      if (!backToTopBtn) return;
+
+      const toggleVisibility = () => {
+        if (window.scrollY > 100) { // Reduced threshold for easier testing
+          backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'invisible');
+          backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'visible');
+        } else {
+          backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'invisible');
+          backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'visible');
+        }
+      };
+
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      // Cleanup old listeners if any (though IIFE protects scope, DOM element is fresh)
+      // Astro swaps body, so we just attach fresh listeners.
+      window.addEventListener('scroll', toggleVisibility, { passive: true });
+      backToTopBtn.onclick = scrollToTop;
+      
+      // Initial check
+      toggleVisibility();
+    }
+
+    // Run immediately
+    initBackToTop();
+  })();
+</script>

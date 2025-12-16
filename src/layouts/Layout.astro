@@ -1,0 +1,107 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Master English tenses with patterns and practice." />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+		<title>{title} | TenseLab</title>
+
+    <script is:inline>
+      const setDarkMode = () => {
+        const theme = (() => {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+          }
+          return 'light';
+        })();
+      
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      };
+
+      // Run on initial load
+      setDarkMode();
+    </script>
+	</head>
+	<body class="flex flex-col min-h-screen font-sans bg-zinc-50 dark:bg-zinc-950">
+		<Header />
+		<main class="flex-1 w-full max-w-5xl mx-auto px-6 py-12 relative">
+      <!-- Ambient background decoration -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/10 dark:bg-blue-900/10 rounded-full blur-3xl opacity-50 mix-blend-multiply dark:mix-blend-screen animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-400/10 dark:bg-purple-900/10 rounded-full blur-3xl opacity-50 mix-blend-multiply dark:mix-blend-screen animate-pulse animation-delay-2000"></div>
+      </div>
+			<slot />
+		</main>
+    <BackToTop />
+		<Footer />
+
+    <!-- Spotlight Effect Script -->
+    <script>
+      function initSpotlight() {
+        const cards = document.querySelectorAll('.spotlight-card');
+        
+        cards.forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            (card).style.setProperty('--mouse-x', `${x}px`);
+            (card).style.setProperty('--mouse-y', `${y}px`);
+          });
+        });
+      }
+
+      // Run on initial load
+      document.addEventListener('DOMContentLoaded', initSpotlight);
+    </script>
+	</body>
+</html>
+
+<style is:global>
+  /* Allow smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    background-color: #09090b; /* zinc-950 */
+    color-scheme: dark;
+  }
+  
+  /* Prevent white flash during view transitions in dark mode */
+  html.dark::view-transition-old(root),
+  html.dark::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  /* Heading font application */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+  }
+</style>

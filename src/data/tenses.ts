@@ -1,0 +1,298 @@
+import type { Tense } from './types';
+
+export const tenses: Tense[] = [
+    // A1-A2 Levels
+    {
+        slug: 'present-simple',
+        name: 'Present Simple',
+        level: 'A1-A2',
+        summary: 'Facts, habits, and routines.',
+        descriptionEN: 'Used for facts, habits, routines, and general truths.',
+        descriptionIDHint: 'Untuk fakta, kebiasaan, rutinitas, dan kebenaran umum.',
+        patterns: {
+            affirmative: 'S + V1 (s/es)',
+            negative: 'S + do/does + not + V1',
+            interrogative: 'Do/Does + S + V1?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'She eats an apple.', textIDHint: 'Dia makan apel.' },
+            { type: 'negative', textEN: 'They do not like coffee.', textIDHint: 'Mereka tidak suka kopi.' },
+            { type: 'question', textEN: 'Do you play football?', textIDHint: 'Apakah kamu bermain sepak bola?' },
+        ],
+    },
+    {
+        slug: 'present-continuous',
+        name: 'Present Continuous',
+        level: 'A1-A2',
+        summary: 'Actions happening right now.',
+        descriptionEN: 'Used for actions happening exactly now or around now.',
+        descriptionIDHint: 'Untuk kejadian yang sedang berlangsung sekarang.',
+        patterns: {
+            affirmative: 'S + am/is/are + V-ing',
+            negative: 'S + am/is/are + not + V-ing',
+            interrogative: 'Am/Is/Are + S + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I am studying English.', textIDHint: 'Saya sedang belajar bahasa Inggris.' },
+            { type: 'negative', textEN: 'He is not sleeping.', textIDHint: 'Dia tidak sedang tidur.' },
+            { type: 'question', textEN: 'Are they watching TV?', textIDHint: 'Apakah mereka sedang menonton TV?' },
+        ],
+    },
+    {
+        slug: 'past-simple',
+        name: 'Past Simple',
+        level: 'A1-A2',
+        summary: 'Finished actions in the past.',
+        descriptionEN: 'Used for actions that started and finished in the past.',
+        descriptionIDHint: 'Untuk kejadian yang sudah selesai di masa lalu.',
+        patterns: {
+            affirmative: 'S + V2',
+            negative: 'S + did + not + V1',
+            interrogative: 'Did + S + V1?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'She visited Paris last year.', textIDHint: 'Dia mengunjungi Paris tahun lalu.' },
+            { type: 'negative', textEN: 'I did not see him.', textIDHint: 'Saya tidak melihatnya.' },
+            { type: 'question', textEN: 'Did you buy milk?', textIDHint: 'Apakah kamu membeli susu?' },
+        ],
+    },
+    {
+        slug: 'future-simple',
+        name: 'Future Simple (Will)',
+        level: 'A1-A2',
+        summary: 'Decisions made now or predictions.',
+        descriptionEN: 'Used for spontaneous decisions, predictions, or promises.',
+        descriptionIDHint: 'Untuk keputusan spontan, prediksi, atau janji.',
+        patterns: {
+            affirmative: 'S + will + V1',
+            negative: 'S + will + not + V1',
+            interrogative: 'Will + S + V1?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I will help you.', textIDHint: 'Saya akan membantumu.' },
+            { type: 'negative', textEN: 'It will not rain.', textIDHint: 'Tidak akan hujan.' },
+            { type: 'question', textEN: 'Will they come?', textIDHint: 'Akankah mereka datang?' },
+        ],
+    },
+    {
+        slug: 'present-perfect',
+        name: 'Present Perfect',
+        level: 'A1-A2',
+        summary: 'Past actions with connection to now.',
+        descriptionEN: 'Used for past actions when time is not specified or result is important.',
+        descriptionIDHint: 'Untuk kejadian lampau tanpa waktu spesifik atau hasilnya masih terasa.',
+        patterns: {
+            affirmative: 'S + has/have + V3',
+            negative: 'S + has/have + not + V3',
+            interrogative: 'Has/Have + S + V3?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I have lost my keys.', textIDHint: 'Saya kehilangan kunci saya.' },
+            { type: 'negative', textEN: 'She has not arrived yet.', textIDHint: 'Dia belum sampai.' },
+            { type: 'question', textEN: 'Have you seen this movie?', textIDHint: 'Sudahkah kamu melihat film ini?' },
+        ],
+    },
+
+    // B1-B2 Levels
+    {
+        slug: 'past-continuous',
+        name: 'Past Continuous',
+        level: 'B1-B2',
+        summary: 'Actions in progress at a past time.',
+        descriptionEN: 'Used for an action happening at a specific moment in the past.',
+        descriptionIDHint: 'Untuk kejadian yang sedang berlangsung di waktu tertentu di masa lalu.',
+        patterns: {
+            affirmative: 'S + was/were + V-ing',
+            negative: 'S + was/were + not + V-ing',
+            interrogative: 'Was/Were + S + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I was reading when you called.', textIDHint: 'Saya sedang membaca ketika kamu menelepon.' },
+            { type: 'negative', textEN: 'They were not listening.', textIDHint: 'Mereka tidak sedang mendengarkan.' },
+            { type: 'question', textEN: 'Was it raining?', textIDHint: 'Apakah tadi sedang hujan?' },
+        ],
+    },
+    {
+        slug: 'past-perfect',
+        name: 'Past Perfect',
+        level: 'B1-B2',
+        summary: 'Action before another past action.',
+        descriptionEN: 'Used to emphasize that one action happened before another past action.',
+        descriptionIDHint: 'Kejadian yang terjadi sebelum kejadian lain di masa lalu.',
+        patterns: {
+            affirmative: 'S + had + V3',
+            negative: 'S + had + not + V3',
+            interrogative: 'Had + S + V3?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'She had left when I arrived.', textIDHint: 'Dia sudah pergi ketika saya tiba.' },
+            { type: 'negative', textEN: 'I had not finished yet.', textIDHint: 'Saya belum selesai saat itu.' },
+            { type: 'question', textEN: 'Had they met before?', textIDHint: 'Apakah mereka sudah pernah bertemu sebelumnya?' },
+        ],
+    },
+    {
+        slug: 'present-perfect-continuous',
+        name: 'Present Perfect Continuous',
+        level: 'B1-B2',
+        summary: 'Started in past, continuing now.',
+        descriptionEN: 'Used for actions that started in the past and are still continuing or recently stopped.',
+        descriptionIDHint: 'Kejadian yang mulai di masa lalu dan masih berlanjut atau baru saja berhenti.',
+        patterns: {
+            affirmative: 'S + has/have + been + V-ing',
+            negative: 'S + has/have + not + been + V-ing',
+            interrogative: 'Has/Have + S + been + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'It has been raining all day.', textIDHint: 'Hujan sudah turun sepanjang hari.' },
+            { type: 'negative', textEN: 'I have not been feeling well.', textIDHint: 'Saya merasa tidak enak badan akhir-akhir ini.' },
+            { type: 'question', textEN: 'Have you been waiting long?', textIDHint: 'Apakah kamu sudah menunggu lama?' },
+        ],
+    },
+    {
+        slug: 'future-continuous',
+        name: 'Future Continuous',
+        level: 'B1-B2',
+        summary: 'Action in progress at future time.',
+        descriptionEN: 'Used for actions that will be in progress at a specific time in the future.',
+        descriptionIDHint: 'Kejadian yang akan sedang berlangsung di masa depan.',
+        patterns: {
+            affirmative: 'S + will + be + V-ing',
+            negative: 'S + will + not + be + V-ing',
+            interrogative: 'Will + S + be + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I will be sleeping at 10 PM.', textIDHint: 'Saya akan sedang tidur jam 10 malam.' },
+            { type: 'negative', textEN: 'She will not be working tomorrow.', textIDHint: 'Dia tidak akan sedang bekerja besok.' },
+            { type: 'question', textEN: 'Will you be using the car?', textIDHint: 'Apakah kamu akan menggunakan mobilnya?' },
+        ],
+    },
+    {
+        slug: 'future-perfect',
+        name: 'Future Perfect',
+        level: 'B1-B2',
+        summary: 'Action finished before future time.',
+        descriptionEN: 'Used for actions that will be completed before a specific time in the future.',
+        descriptionIDHint: 'Kejadian yang akan sudah selesai pada waktu tertentu di masa depan.',
+        patterns: {
+            affirmative: 'S + will + have + V3',
+            negative: 'S + will + not + have + V3',
+            interrogative: 'Will + S + have + V3?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I will have finished by 5 PM.', textIDHint: 'Saya akan sudah selesai jam 5 sore.' },
+            { type: 'negative', textEN: 'We will not have arrived yet.', textIDHint: 'Kami belum akan sampai.' },
+            { type: 'question', textEN: 'Will you have eaten?', textIDHint: 'Apakah kamu sudah akan makan?' },
+        ],
+    },
+
+    // C1 Levels (Complex Tenses)
+    {
+        slug: 'past-perfect-continuous',
+        name: 'Past Perfect Continuous',
+        level: 'C1',
+        summary: 'Continuous action before past time.',
+        descriptionEN: 'Used to show that an action started in the past and continued up to another point in the past.',
+        descriptionIDHint: 'Kejadian yang berlangsung terus-menerus sebelum kejadian lain di masa lalu.',
+        patterns: {
+            affirmative: 'S + had + been + V-ing',
+            negative: 'S + had + not + been + V-ing',
+            interrogative: 'Had + S + been + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I had been working for 2 hours when she called.', textIDHint: 'Saya sudah bekerja selama 2 jam ketika dia menelepon.' },
+            { type: 'negative', textEN: 'It had not been raining long.', textIDHint: 'Hujan belum turun terlalu lama.' },
+            { type: 'question', textEN: 'Had you been waiting long?', textIDHint: 'Apakah kamu sudah menunggu lama?' },
+        ],
+    },
+    {
+        slug: 'future-perfect-continuous',
+        name: 'Future Perfect Continuous',
+        level: 'C1',
+        summary: 'Duration until a future time.',
+        descriptionEN: 'Used to show that an action will continue up until a particular event or time in the future.',
+        descriptionIDHint: 'Menunjukkan durasi suatu kejadian hingga waktu tertentu di masa depan.',
+        patterns: {
+            affirmative: 'S + will + have + been + V-ing',
+            negative: 'S + will + not + have + been + V-ing',
+            interrogative: 'Will + S + have + been + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'By next year, I will have been living here for 5 years.', textIDHint: 'Tahun depan, saya akan sudah tinggal di sini selama 5 tahun.' },
+            { type: 'negative', textEN: 'He will not have been working long.', textIDHint: 'Dia belum akan bekerja terlalu lama.' },
+            { type: 'question', textEN: 'Will you have been studying?', textIDHint: 'Apakah kamu akan sudah sedang belajar?' },
+        ],
+    },
+    // Future in the Past forms
+    {
+        slug: 'past-future-simple',
+        name: 'Past Future Simple',
+        level: 'C1',
+        summary: 'Idea of future from past perspec.',
+        descriptionEN: 'Used to express an action that was predicted or promised in the past.',
+        descriptionIDHint: 'Kejadian yang akan terjadi di masa lalu (janji/prediksi di masa lalu).',
+        patterns: {
+            affirmative: 'S + would + V1',
+            negative: 'S + would + not + V1',
+            interrogative: 'Would + S + V1?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I knew she would win.', textIDHint: 'Saya tahu dia akan menang.' },
+            { type: 'negative', textEN: 'He said he would not go.', textIDHint: 'Dia bilang dia tidak akan pergi.' },
+            { type: 'question', textEN: 'Would you help him?', textIDHint: 'Apakah kamu akan membantunya (dulu/pengandaian)?' },
+        ],
+    },
+    {
+        slug: 'past-future-continuous',
+        name: 'Past Future Continuous',
+        level: 'C1',
+        summary: 'In progress at past future time.',
+        descriptionEN: 'Used to describe an action that would be in progress at a certain time in the past perspective.',
+        descriptionIDHint: 'Kejadian yang akan sedang berlangsung di masa lalu.',
+        patterns: {
+            affirmative: 'S + would + be + V-ing',
+            negative: 'S + would + not + be + V-ing',
+            interrogative: 'Would + S + be + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I thought we would be eating dinner by now.', textIDHint: 'Saya pikir kita akan sedang makan malam sekarang.' },
+            { type: 'negative', textEN: 'She said she would not be sleeping.', textIDHint: 'Dia bilang dia tidak akan sedang tidur.' },
+            { type: 'question', textEN: 'Would they be waiting?', textIDHint: 'Apakah mereka akan sedang menunggu?' },
+        ],
+    },
+    {
+        slug: 'past-future-perfect',
+        name: 'Past Future Perfect',
+        level: 'C1',
+        summary: 'Finished by past future time.',
+        descriptionEN: 'Used to refer to an action that would have been completed in the past perspective (usually conditional).',
+        descriptionIDHint: 'Kejadian yang akan sudah selesai di masa lalu (biasanya pengandaian).',
+        patterns: {
+            affirmative: 'S + would + have + V3',
+            negative: 'S + would + not + have + V3',
+            interrogative: 'Would + S + have + V3?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I would have finished the work.', textIDHint: 'Saya akan sudah menyelesaikan pekerjaan itu.' },
+            { type: 'negative', textEN: 'He would not have known.', textIDHint: 'Dia tidak akan tahu.' },
+            { type: 'question', textEN: 'Would you have gone?', textIDHint: 'Apakah kamu akan sudah pergi?' },
+        ],
+    },
+    {
+        slug: 'past-future-perfect-continuous',
+        name: 'Past Future Perf. Cont.',
+        level: 'C1',
+        summary: 'Duration until past future time.',
+        descriptionEN: 'Used to show duration of an action up to a point in the past perspective.',
+        descriptionIDHint: 'Durasi kejadian yang akan sudah berlangsung di masa lalu.',
+        patterns: {
+            affirmative: 'S + would + have + been + V-ing',
+            negative: 'S + would + not + have + been + V-ing',
+            interrogative: 'Would + S + have + been + V-ing?',
+        },
+        examples: [
+            { type: 'positive', textEN: 'I would have been sleeping for 8 hours by then.', textIDHint: 'Saya akan sudah tidur selama 8 jam saat itu.' },
+            { type: 'negative', textEN: 'She would not have been working long.', textIDHint: 'Dia tidak akan sudah bekerja lama.' },
+            { type: 'question', textEN: 'Would you have been waiting?', textIDHint: 'Apakah kamu akan sudah sedang menunggu?' },
+        ],
+    },
+];

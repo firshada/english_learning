@@ -1,0 +1,33 @@
+---
+import type { Tense } from '../data/types';
+
+interface Props {
+  tense: Tense;
+}
+
+const { tense } = Astro.props;
+
+const levelColors = {
+  'A1-A2': 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700',
+  'B1-B2': 'bg-sky-50 text-sky-700 border-sky-100 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700',
+  'C1': 'bg-violet-50 text-violet-700 border-violet-100 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700',
+};
+---
+
+<a href={`/tenses/${tense.slug}`} class="spotlight-card group block p-8 bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 relative overflow-hidden">
+  <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+       style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(99, 102, 241, 0.05), transparent 40%);"></div>
+
+  <div class="relative">
+    <div class="flex justify-between items-start mb-4">
+      <span class={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${levelColors[tense.level] || 'bg-gray-100 dark:bg-zinc-800'}`}>
+        {tense.level}
+      </span>
+      <span class="text-zinc-300 dark:text-zinc-600 group-hover:text-indigo-400 dark:group-hover:text-blue-400 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </span>
+    </div>
+    <h3 class="text-2xl font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-blue-400 transition-colors">{tense.name}</h3>
+    <p class="text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">{tense.summary}</p>
+  </div>
+</a>
